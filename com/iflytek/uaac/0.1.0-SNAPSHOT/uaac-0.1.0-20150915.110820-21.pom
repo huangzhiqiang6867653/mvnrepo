@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iflytek</groupId>
+	<artifactId>uaac</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1.0-SNAPSHOT</version>
+	<modules>
+		<module>../uaac-common</module>
+		<module>../uaac-base</module>
+ 		<module>../uaac-client-cac</module> 
+		<module>../uaac-client-db</module>
+		<module>../uaac-client-rest</module>
+		<module>../uaac-cache</module>
+		<module>../uaac-log</module>
+		<module>../uaac-service-support</module>
+		<module>../uaac-manager</module>
+		<module>../uaac-service</module>
+		<module>../uaac-syn</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>83.81</id>
+			<name>83.81 Repository</name>
+			<url>http://192.168.83.81:9000/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>83.81release</id>
+			<name>Nexus Release Repository</name>
+			<url>http://192.168.83.81:9000/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>83.81snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://192.168.83.81:9000/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<organization>
+		<name>iflytek</name>
+		<url>http://www.iflytek.com</url>
+	</organization>
+
+	<properties>
+		<common.version>0.1.0-SNAPSHOT</common.version>
+		<uaac.common.version>${common.version}</uaac.common.version>
+		<uaac.base.version>${common.version}</uaac.base.version>
+		<uaac.cache.version>${common.version}</uaac.cache.version>
+		<uaac.service-support.version>${common.version}</uaac.service-support.version>
+		<uaac.client-db.version>${common.version}</uaac.client-db.version>
+		<uaac.client-rest.version>${common.version}</uaac.client-rest.version>
+		<uaac.service.version>${common.version}</uaac.service.version>
+		<uaac.log.version>${common.version}</uaac.log.version>
+<!-- 		可能变动的版本配置 -->
+		<uaac.client-cac.version>1.4.24</uaac.client-cac.version>
+		<uaac.manager.version>${common.version}</uaac.manager.version>		
+	</properties>
+	<dependencies>
+		<!-- log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+					<configuration>
+				        <aggregate>true</aggregate>
+					</configuration>
+				</plugin>	
+			</plugins>
+		</pluginManagement>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-alpha-6</version>
+			</extension>
+		</extensions>
+	</build>
+</project>

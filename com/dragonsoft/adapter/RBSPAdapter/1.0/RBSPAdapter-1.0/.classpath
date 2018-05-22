@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/pci.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/jaxen-1.1-beta-6.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/commonlib.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/xschema.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/xmlparserv2.jar"/>
+	<classpathentry kind="lib" path="D:/Work/RbspAdapterTest/extLib/xml.jar"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

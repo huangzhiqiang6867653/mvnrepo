@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.iflytek</groupId>
+  <artifactId>uaac-client-db</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20160105.012519</timestamp>
+      <buildNumber>31</buildNumber>
+    </snapshot>
+    <lastUpdated>20160105012519</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>jar</extension>
+        <value>0.1.0-20160105.012519-31</value>
+        <updated>20160105012519</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>0.1.0-20160105.012519-31</value>
+        <updated>20160105012519</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

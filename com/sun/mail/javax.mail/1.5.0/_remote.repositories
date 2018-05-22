@@ -1,0 +1,10 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon Mar 27 18:36:03 CST 2017
+javax.mail-1.5.0.jar>snapshot=
+javax.mail-1.5.0.pom>snapshot=
+javax.mail-1.5.0.pom>central=
+javax.mail-1.5.0.jar>central=
+javax.mail-1.5.0.jar>alimaven=
+javax.mail-1.5.0.pom>alimaven=
+javax.mail-1.5.0.jar>nexus=
+javax.mail-1.5.0.pom>nexus=

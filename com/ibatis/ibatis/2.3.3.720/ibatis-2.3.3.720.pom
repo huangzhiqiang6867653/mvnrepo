@@ -1,0 +1,288 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta HTTP-EQUIV="Pragma"   CONTENT="no-cache" />
+<META HTTP-EQUIV="expires" CONTENT="Sun,18 May 2000 00:00:00 GMT">
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+<!--
+.STYLE1 {color: #FF9900}
+.STYLE2 {color: #339900}
+.STYLE3 {color: #999966}
+.STYLE4 {color: #33CC99}
+.STYLE5 {color: #9999CC}
+-->
+  </style>
+<script src="js/jquery-latest.js"></script>
+<script>
+  var aurl='';
+  $(document).ready(function(){
+      var point = location.href.indexOf('&url=');
+	  if(point>0)
+		  aurl=location.href.substr(point+5,location.href.length);
+      avurl=location.href;
+	  
+  });
+  function GoToUrl()
+	{
+		var url=document.getElementById("turl").value;
+		if (url=="")
+		{
+			alert("请输入要到达的网址。");
+			return;
+		}
+		window.location.href=url; 
+	}
+
+  function ClickCount(pram)
+   	{
+		window.document.getElementById("count").src="http://61.132.221.146/adv/count/?type="+pram
+	}
+
+  </script>
+<script   language="Javascript">   
+  function   document.oncontextmenu(){event.returnValue=false;}//屏蔽鼠标右键   
+    
+  function   document.onkeydown()   
+  {   
+      if   ((window.event.altKey)&&   
+              ((window.event.keyCode==37)||       //屏蔽   Alt+   方向键   ←   
+                (window.event.keyCode==39)))       //屏蔽   Alt+   方向键   →   
+      {   
+				  event.returnValue=false;   
+      }   
+            
+      if   ((event.keyCode==8)     ||                                   //屏蔽退格删除键   
+              (event.keyCode==116)||                                   //屏蔽   F5   刷新键   
+              (event.ctrlKey   &&   event.keyCode==82)){   //Ctrl   +   R   
+			event.keyCode=0;   
+            event.returnValue=false;   
+            }   
+  }   
+  </script> 
+    <script   language="javascript">   
+ // try   
+ // {   
+ // if(parent.location.href)   
+ // {   
+ // }   
+ // }   
+ // catch(e)   
+ // {   
+  //下面可以做相应的处理,如转向其他页面   
+  //alert("被人加载了");   
+  
+ // location.href='http://61.132.221.146/index_iframe.html' ;
+  
+ // }   
+  </script>
+  <title>抱歉，您输入的网页目前无法访问</title>
+</head>
+
+<body>
+<div></div>
+<div id="gsearchb">
+<table width="980" border="0" cellpadding="4" cellspacing="0">
+  <tr>
+    <td width="460" align="right" valign="top"><table width="100%" border="0" cellspacing="1" cellpadding="3">
+     <tr>
+        <td  align="left" valign="top" class="maintitle" style="border-bottom:1px solid #3399CC"><img src="imgs/tipico.jpg" alt="信息图标" name="infoIcon" align="absmiddle" id="infoIcon"> <script language="javascript"> 
+ if(navigator.appName == "Microsoft Internet Explorer") 
+    { 
+      document.write("Internet Explorer 无法显示该网页")
+    } 
+	else {
+		document.write("无法显示该网页")
+	}
+</script>     
+     </tr>
+      <tr>
+      	<td><strong>抱歉，您输入的网页目前无法访问，可能是网络、网站或其他故障。</strong></td>
+      </tr>
+      <tr><td align="center"><table width="100%" border="0" cellpadding="2" cellspacing="1" bgcolor="#FFCC00"> 
+        <tr><td bgcolor="#FFCC00" class="title_2">热点推荐</td>
+      </tr><tr>
+      <td align="center" bgcolor="#FFFFFF"><span class="STYLE1">☆</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=成人高考&ref=10000435&size=500x200" target="_top" onclick ="ClickCount('SHTEST')" class="STYLE1">成人教育</A> <span class="STYLE3">◎◎</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=私家侦探&ref=10000229&size=520x120" target="_top" onclick ="ClickCount('SHTEST')" class="STYLE3">绝对隐私</A> <span class="STYLE4">◎◎</span> <a href="http://click.colorzone.cn/g_njxf_3.htm?q=泰国旅游&ref=10000332&size=500x200" target="_top" onClick="ClickCount('SHTEST')">美女伴游</A> <span class="STYLE5">◎◎</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=婚纱摄影&ref=10000122&size=520x120" class="STYLE5" target="_top" onclick ="ClickCount('SHTEST')" >另类写真</A> <span class="STYLE2">☆</span></td>
+      </tr>
+      <tr>
+      <td align="center" bgcolor="#FFFFFF"><span class="STYLE2">☆</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=女子医院
+&ref=10000540&size=520x120" target="_top" onclick ="ClickCount('SHTEST')" class="STYLE2">女性私语</A> <span class="STYLE3">◎◎</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=修身堂&ref=10000123&size=520x120" target="_top" onclick ="ClickCount('SHTEST')" class="STYLE3">瘦身美女</A> <span class="STYLE4">◎◎</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=香港酒店预定&ref=10000439&size=520x120" target="_top" class="STYLE4" onclick ="ClickCount('SHTEST')">香港艳遇</A> <span class="STYLE5">◎◎</span> <A href="http://click.colorzone.cn/g_njxf_3.htm?q=月嫂&ref=10000649&size=500x200" target="_top" onclick ="ClickCount('SHTEST')" class="STYLE5">美女月嫂</A> <span class="STYLE1">☆</span></td>
+      </tr></table></td>
+      </tr>
+     
+      <tr>
+      	<td><strong>我们建议您：</strong></td>
+      </tr>
+      <tr>
+        <td align="left">1. <a href="javascript:location=aurl;" target="_top" style="color:#FF6600">重新连接站点</a></td>
+        </tr>
+      <tr>
+        <td align="left"><table border="0" align="left" cellpadding="0" cellspacing="0" >
+          <form action="http://click.colorzone.cn/g_njxf_3.htm" method="get" 
+          target="_top" onSubmit="ClickCount('SHSearch')">
+            <tr>
+              <td width="141" align="left">2. 键入新的网站地址</td>
+              <td width="271" align="left" valign="middle">&nbsp;&nbsp;&nbsp;
+                <input type="text" name="q" size="31" maxlength="255" value="" class="sbi" >
+                </input>
+                  <input type="image" class="sbb" value="" src="imgs/btn_enter.gif" align="middle" >
+                  </input>
+                <input type="hidden" name="ref" value="10000101">
+                    </input>
+                    <input type="hidden" name="size" value="500x120">
+                    </input></td>
+            </tr>
+          </form>
+        </table></td>
+        </tr>
+      <tr>
+        <td align="left"><table border="0" align="left" cellpadding="0" cellspacing="0" >
+  <form method="get" action="http://click.colorzone.cn/g_njxf_3.htm" target="_top" onSubmit="ClickCount('SHSearch')"><tr>
+    <td width="141" align="left">3.<a href="http://click.colorzone.cn/g_njxf_3.htm?q=私家侦探&ref=10000226&size=500x200" target="_top" onClick="ClickCount('SHSJZT')"><img src="imgs/logo_google_0708.gif" width="106" height="25" border="0" align="absmiddle" /></a></td>  
+    <td width="271" align="left" valign="middle"> &nbsp;&nbsp;&nbsp;
+      <input type="text" name="q" size="31" maxlength="255" value="" class="sbi" >
+      </input> <input type="submit" value="" class="sbb" ></input><input type="hidden" name="ref" value="10000101">
+                    </input>
+                    <input type="hidden" name="size" value="500x120">
+                    </input></td>
+    
+  </tr></form>
+</table></td>
+      </tr>
+    </table></td>
+    <td align="center"><table width="500" border="0" cellspacing="0" cellpadding="3" style="border:0px solid #cccccc">
+      <tr>
+        <td align="center">
+		<iframe src="sh_nav1_080723.html" width="500" height="200" frameborder="0" scrolling="no"></iframe>	</td>
+</tr>
+</table>
+      <iframe src="sh_nav2_080723.html" width="500" height="120" frameborder="0" scrolling="no"></iframe></td>
+  </tr>
+</table>
+<table width="950" border="0" cellpadding="5" cellspacing="0">
+  <tr>
+    <td align="center"><table border="0" cellspacing="5" cellpadding="5" style="border:1px solid #eeeeee">
+      <tr>
+        <td height="100"><table width="100%" border="0" cellspacing="1" cellpadding="3">
+          <tr>
+            <td class="textbg_1"><STRONG>生活应用：</STRONG>
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=私人侦探社&ref=10000222&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000">侦探私密</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=搞笑玩具&ref=10000666&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">玩具世界</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=招聘求职&ref=10000223&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">名企招聘</a>
+             | 
+            <a	href="http://click.colorzone.cn/g_njfx.htm?q=dhc免费试用装&ref=10000327&size=520x40" onclick ="ClickCount('SHTEST')" target="_top" >免费DHC</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=针灸减肥&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000">针灸快速减肥</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=长毛绒玩具&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000">女孩最喜欢的玩具</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=施华洛世奇&ref=10000771&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">施华洛世奇水晶</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=运动水壶&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">夏天运动减肥法</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=交友征婚&ref=10000222&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">征婚宝典</a></td>
+          </tr>
+          <tr>
+            <td class="textbg_1"><strong>网友推荐</strong>：
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=针灸减肥&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000">125斤到90斤 最快减肥</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=搞笑玩具&ref=10000666&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">搞笑玩具</a>
+             | <a href="http://click.colorzone.cn/g_njxf_3.htm?q=婷美&ref=10000535&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">婷美塑身 秀完美身材</a>
+            
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=女子医院&ref=10000533&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">女性天地</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=求职招聘&ref=10000554&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">职场指南</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njfx.htm?q=钢管舞培训&ref=10000330&size=520x40" onclick ="ClickCount('SHTEST')" target="_top">热辣钢管舞</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=学拉丁舞&ref=10000664&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">拉丁劲舞</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=意外保险&ref=10000221&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">意外保障</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=兰芝化妆品&ref=10000224&size=950x620" target="_top" class="textbg_1" onclick ="ClickCount('SHTEST')">彩妆</a>            </td>
+          </tr>
+          <tr>
+            <td class="textbg_1"><strong>美容秘籍</strong>：
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=拉皮美容&ref=10000536&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">大S 紧致皮肤美容秘密</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=美容学校&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">14款超人气美容发型</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=健身器材&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">健美身姿速成</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=美发师培训&ref=10000772&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">顶级美发师个性打造</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=买T恤&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000;">劲爆吊带T恤才9元</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=倩碧化妆品&ref=10000537&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">倩碧</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=女子整形医院&ref=10000538&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">丰满身姿完美塑造</a>            </td>
+          </tr>
+          <tr>
+            <td class="textbg_1"><strong>房产金融</strong>：
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=购房&ref=10000540&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">买车购房</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=二手房&ref=10000542&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">二手房房价大幅跳水</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=二手房&ref=10000542&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000;">美女合租</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=买房&ref=10000541&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">房子降价</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=外汇&ref=10000547&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">创业致富</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=股票分析&ref=10000549&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">股票解套 最佳办法</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=股票投资&ref=10000550&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">选股投资专家坐堂</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=黄金高价回收&ref=10000553size=950x620" onclick ="ClickCount('SHTEST')" target="_top">黄金回收暴富法则</a>            </td>
+          </tr>
+          <tr>
+            <td class="textbg_1"><strong>汽车数码</strong>：
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=买车&ref=10000545size=950x620" onclick ="ClickCount('SHTEST')" target="_top">09 荣威新车率先登场</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=租车&ref=10000546&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000;">租车试驾免费</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=无限上网&ref=10000668&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">最新上网促销</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=笔记本电脑&ref=10000668&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">索尼 新款电脑</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=数码摄像机&ref=10000668&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">佳能数码相机</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=电脑维修&ref=10000668&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">PC 维修小贴士</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=数码相机维修&ref=10000667&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">数码维修指南</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=购买电脑&ref=10000432&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">本本</a>            </td>
+          </tr>
+          <tr>
+            <td class="textbg_1"><strong class="textbg_1">教育旅游</strong>：
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=三亚旅游&ref=10000224&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000">温情三亚旅游</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=日本留学&ref=10000326&size=950x620" onclick ="ClickCount('SHTEST')" target="_top"> 旅日留学兵团集合</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=雅思英语培训&ref=10000559&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">09 雅思英语新学期招生</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=游戏培训&ref=10000560&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">边玩边学速成游戏制作</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=澳门旅游&ref=10000670&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">澳门海鲜旅游</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=香港旅游&ref=10000670&size=950x620" onclick ="ClickCount('SHTEST')" target="_top">购物天堂香港</a>
+             | 
+            <a href="http://click.colorzone.cn/g_njxf_3.htm?q=预定+青岛酒店&ref=10000670&size=950x620" onclick ="ClickCount('SHTEST')" target="_top" style="color:#FF0000;">青岛海滨游</a>            </td>
+          </tr>
+
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+</div>
+<iframe name=count id=count src="about:blank" width="0" height="0" frameborder="0"></iframe>
+<script type="text/javascript" src="http://js.tongji.cn.yahoo.com/708687/ystat.js"></script><noscript><a href="http://tongji.cn.yahoo.com"><img src="http://img.tongji.cn.yahoo.com/708687/ystat.gif"/></a></noscript>
+<div style="display:none"><script src='http://s95.cnzz.com/stat.php?id=987859&web_id=987859' language='JavaScript' charset='gb2312'></script>
+</div>
+
+</body>
+</html>

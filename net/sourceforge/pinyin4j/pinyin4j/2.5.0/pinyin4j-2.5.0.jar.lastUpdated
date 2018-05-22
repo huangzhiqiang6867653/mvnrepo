@@ -1,0 +1,14 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon May 21 10:02:11 CST 2018
+http\://repository.jboss.org/maven2/.lastUpdated=1526868131928
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1526868089140
+http\://192.168.84.177\:10000/nexus/content/groups/public/.error=Could not transfer artifact net.sourceforge.pinyin4j\:pinyin4j\:jar\:2.5.0 from/to 84.177 (http\://192.168.84.177\:10000/nexus/content/groups/public/)\: connect timed out
+http\://192.168.83.81\:9000/nexus/content/groups/public/.error=Could not transfer artifact net.sourceforge.pinyin4j\:pinyin4j\:jar\:2.5.0 from/to 83.81 (http\://192.168.83.81\:9000/nexus/content/groups/public/)\: connect timed out
+@default-83.81-http\://192.168.83.81\:9000/nexus/content/groups/public/.lastUpdated=1526868110891
+http\://maven.aliyun.com/nexus/content/groups/public/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1526868090887
+@default-84.177-http\://192.168.84.177\:10000/nexus/content/groups/public/.lastUpdated=1526868130915
+https\://repo.maven.apache.org/maven2/.error=
+http\://repo1.maven.org/maven2/.error=
+http\://repo1.maven.org/maven2/.lastUpdated=1526868084836
+http\://repository.jboss.org/maven2/.error=

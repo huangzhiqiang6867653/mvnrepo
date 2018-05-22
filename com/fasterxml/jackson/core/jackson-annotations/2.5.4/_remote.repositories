@@ -1,0 +1,10 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon Mar 27 18:36:05 CST 2017
+jackson-annotations-2.5.4.jar>nexus=
+jackson-annotations-2.5.4.jar>central=
+jackson-annotations-2.5.4.pom>central=
+jackson-annotations-2.5.4.jar>snapshot=
+jackson-annotations-2.5.4.pom>snapshot=
+jackson-annotations-2.5.4.jar>alimaven=
+jackson-annotations-2.5.4.pom>nexus=
+jackson-annotations-2.5.4.pom>alimaven=

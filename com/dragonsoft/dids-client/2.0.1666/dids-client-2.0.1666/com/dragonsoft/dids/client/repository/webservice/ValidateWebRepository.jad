@@ -1,0 +1,186 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-19 0:09:48
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   ValidateWebRepository.java
+
+package com.dragonsoft.dids.client.repository.webservice;
+
+import com.dragonsoft.dids.client.utils.PropUtils;
+import com.dragonsoft.dids.model.App;
+import com.thoughtworks.xstream.XStream;
+import java.net.URL;
+import org.apache.axis.client.Call;
+import org.apache.axis.client.Service;
+import org.apache.log4j.Logger;
+
+public class ValidateWebRepository
+{
+
+    public ValidateWebRepository()
+    {
+    }
+
+    public static String checkLogin(String userNo, String pwd)
+    {
+        String userId = "";
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService checkLogin() begin[param: userNo=" + userNo + " | pwd=" + pwd + "]");
+            call.setOperationName("checkLogin");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            userId = (String)call.invoke(new Object[] {
+                userNo, pwd
+            });
+            LOG.debug("Return userId IS :" + userId);
+            LOG.info("Excute WebService checkLogin() end.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return userId;
+    }
+
+    public static boolean checkRight(String userId, String rightCode, String appCode)
+    {
+        boolean flag = false;
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService checkRight() begin[param: userId=" + userId + " | rightCode=" + rightCode + "]");
+            call.setOperationName("checkRight");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            String booleanStr = (String)call.invoke(new Object[] {
+                userId
+            });
+            LOG.debug("Return XML IS :" + booleanStr);
+            flag = Boolean.getBoolean(booleanStr);
+            LOG.info("Excute WebService checkRight() end.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static boolean checkUrlRight(String userId, String url, String appCode)
+    {
+        boolean flag = false;
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService checkUrlRight() begin[param: userId=" + userId + " | url=" + url + "]");
+            call.setOperationName("checkUrlRight");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            String booleanStr = (String)call.invoke(new Object[] {
+                userId
+            });
+            LOG.debug("Return XML IS :" + booleanStr);
+            flag = Boolean.getBoolean("" + booleanStr);
+            LOG.info("Excute WebService checkUrlRight() end.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static boolean changePassword(String userId, String pwd)
+    {
+        boolean flag = false;
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService changePassword() begin[param: userId=" + userId + " | pwd=" + pwd + "]");
+            call.setOperationName("changePassword");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            String booleanStr = (String)call.invoke(new Object[] {
+                userId, pwd
+            });
+            LOG.debug("Return XML IS :" + booleanStr);
+            flag = Boolean.getBoolean("" + booleanStr);
+            LOG.info("Excute WebService changePassword() end.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static boolean changePasswordByUserNo(String userNo, String pwd)
+    {
+        boolean flag = false;
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService changePasswordByUserNo() begin[param: userNo=" + userNo + " | pwd=" + pwd + "]");
+            call.setOperationName("changePasswordByUserNo");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            String booleanStr = (String)call.invoke(new Object[] {
+                userNo, pwd
+            });
+            LOG.debug("Return XML IS :" + booleanStr);
+            flag = Boolean.getBoolean("" + booleanStr);
+            LOG.info("Excute WebService changePasswordByUserNo() end.");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+
+    public static App getAppInfo(String appCode)
+    {
+        App a = null;
+        try
+        {
+            Call call = (Call)service.createCall();
+            LOG.info("Excute WebService getAppInfo() begin[param: appCode=" + appCode + "]");
+            call.setOperationName("getAppInfo");
+            call.setTargetEndpointAddress(new URL(VALIDATE_SERVICE_URL));
+            String xml = (String)call.invoke(new Object[] {
+                appCode
+            });
+            LOG.debug("Return XML IS :" + xml);
+            if(xml != null && !"".equals(xml))
+                a = (App)xstream.fromXML(xml);
+            LOG.info("Excute WebService getAppInfo() end.");
+        }
+        catch(Exception e)
+        {
+            LOG.info("\u5E94\u7528\u4FE1\u606F\u83B7\u53D6\u5931\u8D25\uFF0C\u8BF7\u68C0\u67E5webservice url\u914D\u7F6E~");
+        }
+        return a;
+    }
+
+    static Class _mthclass$(String x0)
+    {
+        return Class.forName(x0);
+        ClassNotFoundException x1;
+        x1;
+        throw (new NoClassDefFoundError()).initCause(x1);
+    }
+
+    private static final Logger LOG;
+    public static final String BASE_WEBSERVICE_URL = PropUtils.getInstance().getConfigItem("dids2.webServiceUrl");
+    public static final String VALIDATE_SERVICE = "validateWebservice";
+    public static final String VALIDATE_SERVICE_URL = BASE_WEBSERVICE_URL + "validateWebservice";
+    public static final String CHECK_LOGIN_REQUEST = "checkLogin";
+    public static final String CHECK_RIGHT_REQUEST = "checkRight";
+    public static final String CHECK_URLRIGHT_REQUEST = "checkUrlRight";
+    public static final String CHANGE_PASSWORD_REQUEST = "changePassword";
+    public static final String CHANGE_PASSWORD_USERNO_REQUEST = "changePasswordByUserNo";
+    public static final String GET_APP_INFO_REQUEST = "getAppInfo";
+    private static Service service = new Service();
+    private static XStream xstream = new XStream();
+
+    static 
+    {
+        LOG = Logger.getLogger(com.dragonsoft.dids.client.repository.webservice.ValidateWebRepository.class);
+    }
+}

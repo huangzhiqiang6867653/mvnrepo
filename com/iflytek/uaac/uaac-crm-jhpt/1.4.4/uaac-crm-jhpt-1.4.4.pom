@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>com.iflytek.uaac</groupId>
+		<artifactId>uaac-crm-parent</artifactId>
+		<version>1.4.4</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>uaac-crm-jhpt</artifactId>
+	<packaging>war</packaging>
+	<name>uaac-crm-jhpt</name>
+
+	<dependencies>
+		<!-- 对需要合并的web模块的依赖 -->
+		<dependency>
+			<groupId>com.iflytek.uaac</groupId>
+			<artifactId>uaac-crm-common</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>uaac-crm</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.2</version>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.10</version>
+				<configuration>
+					<webAppSourceDirectory>
+						src/main/webapp
+					</webAppSourceDirectory>
+					<scanIntervalSeconds>3</scanIntervalSeconds>
+					<contextPath>/uaac-crm</contextPath>
+					<webDefaultXml>jetty.xml</webDefaultXml>
+					<jettyEnvXml>jetty-env.xml</jettyEnvXml>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8100</port>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

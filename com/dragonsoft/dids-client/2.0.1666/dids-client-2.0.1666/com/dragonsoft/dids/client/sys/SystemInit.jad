@@ -1,0 +1,53 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-19 0:41:18
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   SystemInit.java
+
+package com.dragonsoft.dids.client.sys;
+
+import com.dragonsoft.dids.client.service.ValidateService;
+import com.dragonsoft.dids.model.App;
+import org.apache.log4j.Logger;
+
+// Referenced classes of package com.dragonsoft.dids.client.sys:
+//            DidsServiceLocator
+
+public class SystemInit
+{
+
+    public SystemInit()
+    {
+    }
+
+    public static void init()
+    {
+        LOG.info("\u5411DIDS-Server\u8BF7\u6C42\u5E94\u7528\u6CE8\u518C\u4FE1\u606F\u3002\u3002\u3002");
+        App a = null;
+        a = DidsServiceLocator.getValidateService().getAppInfo();
+        if(a != null)
+        {
+            LOG.info("\u5E94\u7528\u540D\uFF1A" + a.getName());
+            LOG.info("\u5E94\u7528\u4EE3\u7801\uFF1A" + a.getCode());
+            LOG.info("\u6743\u9650\u7BA1\u7406\u6A21\u5F0F\uFF081.DIDS\u7BA1\u7406\uFF0C2.\u72EC\u7ACB\u5F0F\u7BA1\u7406\uFF0C3.PMI\u7BA1\u7406\uFF09\uFF1A" + a.getIsTrust());
+            LOG.info("\u7528\u6237\u7BA1\u7406\u6A21\u5F0F\uFF081.DIDS\u6258\u7BA1\uFF0C2.\u5E94\u7528\u7CFB\u7EDF\u7BA1\u7406\uFF0C3.PKI\u6258\u7BA1\uFF09\uFF1A" + a.getUserMode());
+        } else
+        {
+            LOG.info("error*:\u5411DIDS-Server\u8BF7\u6C42\u5E94\u7528\u6CE8\u518C\u4FE1\u606F\u5931\u8D25\u3002\u3002\u3002");
+        }
+    }
+
+    static Class _mthclass$(String x0)
+    {
+        return Class.forName(x0);
+        ClassNotFoundException x1;
+        x1;
+        throw (new NoClassDefFoundError()).initCause(x1);
+    }
+
+    private static final Logger LOG;
+
+    static 
+    {
+        LOG = Logger.getLogger(com.dragonsoft.dids.client.sys.SystemInit.class);
+    }
+}

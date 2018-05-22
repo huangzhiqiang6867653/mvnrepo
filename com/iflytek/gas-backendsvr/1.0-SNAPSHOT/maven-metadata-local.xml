@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+  <groupId>com.iflytek</groupId>
+  <artifactId>gas-backendsvr</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20081214063904</lastUpdated>
+  </versioning>
+</metadata>

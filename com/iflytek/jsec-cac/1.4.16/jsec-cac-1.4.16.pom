@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iflytek</groupId>
+	<artifactId>jsec-cac</artifactId>
+	<packaging>jar</packaging>
+	<version>1.4.16</version>
+	<name>iflytek's Java Security @ Central Authentication Client</name>
+	
+	<repositories>	
+	 	<repository>
+            <id>jboss-cache</id>
+            <name>jboss-cache</name>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
+        <repository>
+			<id>82.51</id>
+			<name>82.51 Repository</name>
+			<url>http://192.168.82.51:10000/nexus/content/groups/public/</url>
+		</repository> 
+	</repositories>
+	
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.iflytek.framework</groupId>
+			<artifactId>iframework</artifactId>
+			<version>1.3</version>
+		</dependency>
+		
+
+ 
+ 
+	 	
+ 	<!--   test  -->		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>2.5.6</version>
+			<scope>test</scope>
+		</dependency>
+	     <dependency>
+			<groupId>org.unitils</groupId>
+			<artifactId>unitils</artifactId>
+			<version>2.4</version>
+			<scope>test</scope>
+		</dependency>
+	     
+ 	 
+    <!--  JDBC driver and dataSource  and cglib -->	
+      
+  		 <dependency>
+		      <groupId>mysql</groupId>
+		      <artifactId>mysql-connector-java</artifactId>
+		      <version>5.1.9</version>
+		 </dependency>
+ 	  <!--  JDBC driver and dataSource  and cglib -->	
+     	 
+ 		<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc14</artifactId>
+            <version>10.2.0.2.0</version>
+        </dependency>  
+        
+  </dependencies>
+
+	
+	
+ 
+ 
+ 
+    <organization>
+    <name>iflytek</name>
+    <url>http://www.iflytek.com</url>
+  </organization>
+
+
+
+
+
+
+<build>
+		<resources>
+			<resource>
+				<directory>src/main/resource</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>		
+			<resource>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>				 
+		</resources>
+		<finalName>jsec-cac</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<encoding>utf-8</encoding>
+					
+					
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<charset>UTF-8</charset>
+				</configuration>
+			</plugin>						
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+ 
+		</plugins>
+	</build>
+
+
+	
+	
+	
+</project>

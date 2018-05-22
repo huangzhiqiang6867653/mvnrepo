@@ -1,0 +1,272 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-20 19:36:24
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   HttpPIEEOperator.java
+
+package com.dragonsoft.rbsp.piee.api;
+
+import com.dragonsoft.rbsp.piee.base.DataFormat;
+import com.dragonsoft.rbsp.piee.base.LogHelper;
+import com.dragonsoft.rbsp.piee.base.spackage.SpackMessage;
+import com.dragonsoft.rbsp.piee.base.spackage.SubMessage;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.util.*;
+import org.apache.log4j.Logger;
+
+// Referenced classes of package com.dragonsoft.rbsp.piee.api:
+//            PIEEOperator
+
+public class HttpPIEEOperator
+    implements PIEEOperator
+{
+    private static class RandomGenerator
+    {
+
+        static long getRandomLong()
+        {
+            Object obj = innerLock;
+            JVM INSTR monitorenter ;
+            return count++ % 0x5f5e100L;
+            Exception exception;
+            exception;
+            throw exception;
+        }
+
+        private static long count = 0L;
+        private static Object innerLock = new Object();
+
+
+        private RandomGenerator()
+        {
+        }
+    }
+
+
+    public HttpPIEEOperator()
+    {
+    }
+
+    public void connect(String url)
+    {
+        this.url = url;
+    }
+
+    public void disconnect()
+    {
+        url = null;
+    }
+
+    public List write(List msgUnits)
+        throws Exception
+    {
+        List returnList = new ArrayList();
+        if(msgUnits.size() == 0)
+            return returnList;
+        SpackMessage spackMsg = new SpackMessage();
+        try
+        {
+            remoteConn = (HttpURLConnection)(new URL(url)).openConnection();
+            remoteConn.setDoOutput(true);
+            out = remoteConn.getOutputStream();
+            String msgID;
+            for(Iterator it = msgUnits.iterator(); it.hasNext(); returnList.add(msgID))
+            {
+                SubMessage subMsg = (SubMessage)it.next();
+                msgID = createMsgID(subMsg.getSendID());
+                subMsg.setSendTime((new DataFormat()).getNowDataTime());
+                spackMsg.add(subMsg);
+            }
+
+            byte tmpArray[] = spackMsg.transact();
+            int length = tmpArray.length;
+            int start = 0;
+            int offset = length < 4096 ? length : 4096;
+            do
+            {
+                out.write(tmpArray, start, offset);
+                start += offset;
+                offset = length - start;
+                offset = offset <= 4096 ? offset : 4096;
+            } while(length > start);
+            out.flush();
+            out.close();
+            in = new DataInputStream(remoteConn.getInputStream());
+            byte bytes_in[] = new byte[in.available()];
+            in.readFully(bytes_in);
+            in.close();
+            spackMsg = null;
+            if((new String(bytes_in)).indexOf("Flux Limit") > -1)
+                throw new Exception("Flux Limit");
+            if((new String(bytes_in)).indexOf("Stress Limit") > -1)
+                throw new Exception("Stress Limit");
+            if((new String(bytes_in)).indexOf("App Stopped") > -1)
+                throw new Exception("App Stopped");
+        }
+        catch(IOException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if(null != out)
+            {
+                try
+                {
+                    out.flush();
+                    out.close();
+                }
+                catch(IOException ex1)
+                {
+                    logger.warn("\u5173\u95ED\u8FDC\u7AEF\u8FDE\u63A5\u5F02\u5E38", ex1);
+                }
+                out = null;
+            }
+            if(null != in)
+            {
+                try
+                {
+                    in.close();
+                }
+                catch(IOException ex2)
+                {
+                    logger.warn("\u5173\u95ED\u8FDC\u7AEF\u8FDE\u63A5\u5F02\u5E38", ex2);
+                }
+                in = null;
+            }
+            if(null != remoteConn)
+            {
+                remoteConn.disconnect();
+                remoteConn = null;
+            }
+        }
+        return returnList;
+    }
+
+    public List read(List msgUnits)
+        throws Exception
+    {
+        List returnList = new ArrayList();
+        if(msgUnits.size() == 0)
+            return returnList;
+        SpackMessage spackMsg = new SpackMessage();
+        try
+        {
+            remoteConn = (HttpURLConnection)(new URL(url)).openConnection();
+            remoteConn.setDoInput(true);
+            remoteConn.setDoOutput(true);
+            out = remoteConn.getOutputStream();
+            String msgID;
+            for(Iterator it = msgUnits.iterator(); it.hasNext(); returnList.add(msgID))
+            {
+                SubMessage subMsg = (SubMessage)it.next();
+                msgID = createMsgID(subMsg.getSendID());
+                subMsg.setSendTime((new DataFormat()).getNowDataTime());
+                spackMsg.add(subMsg);
+            }
+
+            byte tmpArray[] = spackMsg.transact();
+            int length = tmpArray.length;
+            int start = 0;
+            int offset = length < 4096 ? length : 4096;
+            do
+            {
+                out.write(tmpArray, start, offset);
+                start += offset;
+                offset = length - start;
+                offset = offset <= 4096 ? offset : 4096;
+            } while(length > start);
+            out.flush();
+            out.close();
+            in = new DataInputStream(remoteConn.getInputStream());
+            byte array[] = new byte[4096];
+            int count = -1;
+            ByteArrayOutputStream barray = new ByteArrayOutputStream();
+            while(-1 != (count = in.read(array))) 
+                barray.write(array, 0, count);
+            byte data[] = barray.toByteArray();
+            if((new String(data)).indexOf("Flux Limit") > -1)
+                throw new Exception("Flux Limit");
+            if((new String(data)).indexOf("Stress Limit") > -1)
+                throw new Exception("Stress Limit");
+            if((new String(data)).indexOf("App Stopped") > -1)
+                throw new Exception("App Stopped");
+            barray.close();
+            spackMsg = new SpackMessage(data);
+            spackMsg.tranparse();
+        }
+        catch(IOException ex)
+        {
+            throw ex;
+        }
+        finally
+        {
+            if(null != out)
+            {
+                try
+                {
+                    out.flush();
+                    out.close();
+                }
+                catch(IOException ex1)
+                {
+                    logger.warn("\u5173\u95ED\u6D41\u5F02\u5E38", ex1);
+                }
+                out = null;
+            }
+            if(null != in)
+            {
+                try
+                {
+                    in.close();
+                }
+                catch(IOException ex2)
+                {
+                    logger.warn("\u5173\u95ED\u6D41\u5F02\u5E38", ex2);
+                }
+                in = null;
+            }
+            if(null != remoteConn)
+            {
+                remoteConn.disconnect();
+                remoteConn = null;
+            }
+        }
+        return spackMsg.getMsgList();
+    }
+
+    protected String createMsgID(String appCode)
+    {
+        StringBuffer strBuf = new StringBuffer(32);
+        int len = appCode.getBytes().length;
+        if(len > 12)
+        {
+            strBuf.append(appCode.substring(0, 12));
+        } else
+        {
+            for(int i = 0; i < 12; i++)
+                strBuf.append(" ");
+
+            strBuf.append(appCode);
+        }
+        strBuf.append(System.currentTimeMillis());
+        String randomStr = (new DecimalFormat("0000000")).format(RandomGenerator.getRandomLong());
+        strBuf.append(randomStr);
+        return strBuf.toString();
+    }
+
+    public static void testCodeGenerator()
+    {
+        System.out.println(RandomGenerator.getRandomLong());
+    }
+
+    private static final int MAX_APP_CODE = 12;
+    private static Logger logger = LogHelper.getLogger();
+    private String url;
+    private HttpURLConnection remoteConn;
+    private OutputStream out;
+    private DataInputStream in;
+
+}

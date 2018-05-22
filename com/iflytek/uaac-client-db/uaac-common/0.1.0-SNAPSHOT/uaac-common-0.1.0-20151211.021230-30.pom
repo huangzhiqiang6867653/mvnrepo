@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>uaac</artifactId>
+		<groupId>com.iflytek</groupId>
+		<version>0.1.0-SNAPSHOT</version>
+		<relativePath>../uaac/pom.xml</relativePath>
+	</parent>
+	<artifactId>uaac-common</artifactId>
+	<version>${uaac.common.version}</version>
+	<name>uaac-common</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.iflytek</groupId>
+			<artifactId>uaac-cache</artifactId>
+			<version>${uaac.cache.version}</version>
+		</dependency>
+		<!-- log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.5.8</version>
+		</dependency>
+		<!-- cas client -->
+		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<!-- jersey start -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+            <groupId>com.sun.jersey</groupId>
+             <artifactId>jersey-client</artifactId>
+            <version>1.2</version>
+        </dependency> 
+		<!-- jersey end -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>					
+				<classesDirectory>target/classes/</classesDirectory>
+				<archive>
+					<addMavenDescriptor>false</addMavenDescriptor>
+				</archive>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+</project>

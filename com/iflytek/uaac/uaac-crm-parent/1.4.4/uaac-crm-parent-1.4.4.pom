@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.iflytek.uaac</groupId>
+	<artifactId>uaac-crm-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.4.4</version>
+	<name>uaac-crm-parent</name>
+
+	<organization>
+		<name>iflytek</name>
+		<url>http://www.iflytek.com</url>
+	</organization>
+
+	<modules>
+		<module>uaac-crm-common</module>
+		<module>uaac-crm-jhpt</module>
+		<module>uaac-crm-sjzx</module>
+	</modules>
+</project>

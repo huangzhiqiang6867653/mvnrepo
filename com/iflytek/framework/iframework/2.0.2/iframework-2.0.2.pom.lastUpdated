@@ -1,0 +1,10 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Mon May 21 09:57:35 CST 2018
+@default-83.81-http\://192.168.83.81\:9000/nexus/content/groups/public/.lastUpdated=1526867855234
+http\://maven.aliyun.com/nexus/content/groups/public/.error=
+http\://repo1.maven.org/maven2/.error=
+http\://repo1.maven.org/maven2/.lastUpdated=1526867840792
+https\://repo.maven.apache.org/maven2/.lastUpdated=1526867844841
+http\://192.168.83.81\:9000/nexus/content/groups/public/.error=Could not transfer artifact com.iflytek.framework\:iframework\:pom\:2.0.2 from/to 83.81 (http\://192.168.83.81\:9000/nexus/content/groups/public/)\: connect timed out
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1526867845231
+https\://repo.maven.apache.org/maven2/.error=

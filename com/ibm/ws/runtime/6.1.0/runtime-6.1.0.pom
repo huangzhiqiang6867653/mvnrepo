@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ibm.ws</groupId>
+  <artifactId>runtime</artifactId>
+  <version>6.1.0</version>
+</project>

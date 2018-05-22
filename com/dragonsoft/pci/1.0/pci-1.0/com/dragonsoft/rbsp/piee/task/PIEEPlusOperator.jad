@@ -1,0 +1,350 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-20 19:36:11
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   PIEEPlusOperator.java
+
+package com.dragonsoft.rbsp.piee.task;
+
+import com.dragonsoft.rbsp.piee.api.HttpPIEEOperator;
+import com.dragonsoft.rbsp.piee.base.spackage.SubMessage;
+import java.io.ByteArrayInputStream;
+import java.util.*;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
+// Referenced classes of package com.dragonsoft.rbsp.piee.task:
+//            SubTask, MessageTooLargeException, MessageFormatChecker, MessageFormatException, 
+//            AuthenticationFailureException, Task2Message, FluxLimitException, AppAuthenticator, 
+//            IDGenerator
+
+public class PIEEPlusOperator
+{
+
+    public PIEEPlusOperator()
+    {
+    }
+
+    public List sendTasks(List subTaskList, String ip, String port)
+        throws AuthenticationFailureException, MessageFormatException, MessageTooLargeException, FluxLimitException, Exception
+    {
+        String senderID = ((SubTask)subTaskList.get(0)).getSenderID();
+        boolean flag = false;
+        flag = true;
+        int i = 0;
+        do
+        {
+            if(i >= subTaskList.size())
+                break;
+            if(((SubTask)subTaskList.get(i)).getTaskBody().length > 0x200000)
+            {
+                flag = false;
+                break;
+            }
+            if(((SubTask)subTaskList.get(i)).getTaskType().equals("0101") && ((SubTask)subTaskList.get(i)).getTaskBody().length > 51200)
+            {
+                flag = false;
+                break;
+            }
+            i++;
+        } while(true);
+        if(!flag)
+            throw new MessageTooLargeException("\u4EFB\u52A1\u62A5\u6587\u5C3A\u5BF8\u8D85\u6807\uFF0C\u6700\u5927\u4EFB\u52A1\u62A5\u6587\u9650\u5236\u4E3A2M\u5B57\u8282\uFF0C\u65B9\u6CD5\u8C03\u7528\u8BF7\u6C42\u4EFB\u52A1\u62A5\u6587\u9650\u5236\u4E3A50K\u5B57\u8282\uFF01");
+        try
+        {
+            SubTask subTask = null;
+            for(int i = 0; i < subTaskList.size(); i++)
+            {
+                subTask = (SubTask)subTaskList.get(i);
+                if((subTask.getTaskType().equals("0101") || subTask.getTaskType().equals("0102")) && !(new MessageFormatChecker()).check(new String(subTask.getTaskBody()), subTask.getTaskType()))
+                    throw new MessageFormatException("\u5E94\u7528\u65B9ID\u4E3A" + senderID + "\u7684\u5E94\u7528\u65B9\u5728\u53D1\u9001\u4EFB\u52A1\u65F6\u8BF7\u6C42\u62A5\u6587\u683C\u5F0F\u672A\u901A\u8FC7\uFF01");
+            }
+
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        flag = checkTaskSenderID(subTaskList, senderID);
+        if(!flag)
+            throw new AuthenticationFailureException("\u53D1\u9001\u4EFB\u52A1\u65F6\u5E94\u7528\u65B9\u8EAB\u4EFD\u4E0D\u4E00\u81F4\uFF01");
+        try
+        {
+            SubTask subTask = null;
+            for(int i = 0; i < subTaskList.size(); i++)
+            {
+                subTask = (SubTask)subTaskList.get(i);
+                if(subTask.getTaskType().equals("0101") || subTask.getTaskType().equals("0102"))
+                {
+                    flag = checkTaskMessageSenderID(subTaskList, senderID);
+                    if(!flag)
+                        throw new AuthenticationFailureException("\u4EFB\u52A1\u62A5\u6587\u4E2D\u7684\u5E94\u7528\u65B9\u8EAB\u4EFD\u548C\u53D1\u9001\u65B9\u8EAB\u4EFD\u4E0D\u4E00\u81F4\uFF01");
+                }
+            }
+
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        try
+        {
+            if(!AppAuthenticator.check(senderID))
+                throw new AuthenticationFailureException("\u5E94\u7528\u65B9ID\u4E3A" + senderID + "\u7684\u5E94\u7528\u65B9\u5728\u53D1\u9001\u4EFB\u52A1\u65F6\u8EAB\u4EFD\u8BA4\u8BC1\u672A\u901A\u8FC7\uFF01");
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        ArrayList subMessageList = new ArrayList();
+        ArrayList tempList = null;
+        SubTask subTask = null;
+        String taskID = null;
+        Task2Message t2m = new Task2Message();
+        ArrayList taskIDList = new ArrayList();
+        IDGenerator idGenerator = IDGenerator.getInstance(((SubTask)subTaskList.get(0)).getSenderID());
+        for(int i = 0; i < subTaskList.size(); i++)
+        {
+            subTask = (SubTask)subTaskList.get(i);
+            taskID = idGenerator.getNextId();
+            subTask.setTaskID(taskID);
+            if(subTask.getSrcTaskID().trim().equals(""))
+                subTask.setSrcTaskID(taskID);
+            subTask.setCommand("1001");
+            taskIDList.add(taskID);
+            tempList = (ArrayList)t2m.task2Message(subTask);
+            for(int j = 0; j < tempList.size(); j++)
+                subMessageList.add((SubMessage)tempList.get(j));
+
+        }
+
+        ArrayList messageList = null;
+        SubMessage subMessage = null;
+        HttpPIEEOperator httpPIEEOperator = new HttpPIEEOperator();
+        try
+        {
+            for(int i = 0; i < subMessageList.size(); i++)
+            {
+                subMessage = (SubMessage)subMessageList.get(i);
+                messageList = new ArrayList();
+                messageList.add(subMessage);
+                if(port.trim().equals(""))
+                    httpPIEEOperator.connect("http://" + ip + "/piee/listen.dragon");
+                else
+                    httpPIEEOperator.connect("http://" + ip + ":" + port + "/piee/listen.dragon");
+                httpPIEEOperator.write(messageList);
+                httpPIEEOperator.disconnect();
+            }
+
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage() != null && e.getMessage().indexOf("Flux Limit") > -1)
+                throw new FluxLimitException("\u540C\u65F6\u5728\u7EBF\u7684\u5E94\u7528\u65B9\u6570\u91CF\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("Stress Limit") > -1)
+                throw new FluxLimitException("\u5E76\u53D1\u6570\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("App Stopped") > -1)
+                throw new AuthenticationFailureException("\u5E94\u7528\u5DF2\u88AB\u53D6\u6D88\u8D44\u683C");
+            else
+                throw e;
+        }
+        return taskIDList;
+    }
+
+    public List receiveTasks(SubTask subTask, String ip, String port, boolean full)
+        throws AuthenticationFailureException, FluxLimitException, Exception
+    {
+        String senderID = subTask.getSenderID();
+        try
+        {
+            if(!AppAuthenticator.check(senderID))
+                throw new AuthenticationFailureException("\u5E94\u7528\u65B9ID\u4E3A" + senderID + "\u7684\u5E94\u7528\u65B9\u5728\u63A5\u6536\u4EFB\u52A1\u65F6\u8EAB\u4EFD\u8BA4\u8BC1\u672A\u901A\u8FC7\uFF01");
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        ArrayList subMessageList = new ArrayList();
+        Task2Message t2m = new Task2Message();
+        subTask.setTaskID("");
+        subTask.setCommand("1002");
+        if(full)
+            subTask.setTaskBody("0".getBytes());
+        else
+            subTask.setTaskBody("1".getBytes());
+        subMessageList = (ArrayList)t2m.task2Message(subTask);
+        HttpPIEEOperator httpPIEEOperator = new HttpPIEEOperator();
+        ArrayList messageList = null;
+        try
+        {
+            if(port.trim().equals(""))
+                httpPIEEOperator.connect("http://" + ip + "/piee/listen.dragon");
+            else
+                httpPIEEOperator.connect("http://" + ip + ":" + port + "/piee/listen.dragon");
+            messageList = (ArrayList)httpPIEEOperator.read(subMessageList);
+            httpPIEEOperator.disconnect();
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage() != null && e.getMessage().indexOf("Flux Limit") > -1)
+                throw new FluxLimitException("\u540C\u65F6\u5728\u7EBF\u7684\u5E94\u7528\u65B9\u6570\u91CF\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("Stress Limit") > -1)
+                throw new FluxLimitException("\u5E76\u53D1\u6570\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("App Stopped") > -1)
+                throw new AuthenticationFailureException("\u5E94\u7528\u5DF2\u88AB\u53D6\u6D88\u8D44\u683C");
+            else
+                throw e;
+        }
+        ArrayList taskList = (ArrayList)t2m.message2Task(messageList);
+        return taskList;
+    }
+
+    public SubTask receiveUniqueTask(SubTask subTask, String ip, String port)
+        throws AuthenticationFailureException, FluxLimitException, Exception
+    {
+        String senderID = subTask.getSenderID();
+        try
+        {
+            if(!AppAuthenticator.check(senderID))
+                throw new AuthenticationFailureException("\u5E94\u7528\u65B9ID\u4E3A" + senderID + "\u7684\u5E94\u7528\u65B9\u5728\u63A5\u6536\u4EFB\u52A1\u65F6\u8EAB\u4EFD\u8BA4\u8BC1\u672A\u901A\u8FC7\uFF01");
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        ArrayList subMessageList = new ArrayList();
+        Task2Message t2m = new Task2Message();
+        subTask.setCommand("1002");
+        subTask.setTaskBody("2".getBytes());
+        subMessageList = (ArrayList)t2m.task2Message(subTask);
+        HttpPIEEOperator httpPIEEOperator = new HttpPIEEOperator();
+        ArrayList messageList = null;
+        try
+        {
+            if(port.trim().equals(""))
+                httpPIEEOperator.connect("http://" + ip + "/piee/listen.dragon");
+            else
+                httpPIEEOperator.connect("http://" + ip + ":" + port + "/piee/listen.dragon");
+            messageList = (ArrayList)httpPIEEOperator.read(subMessageList);
+            httpPIEEOperator.disconnect();
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage() != null && e.getMessage().indexOf("Flux Limit") > -1)
+                throw new FluxLimitException("\u540C\u65F6\u5728\u7EBF\u7684\u5E94\u7528\u65B9\u6570\u91CF\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("Stress Limit") > -1)
+                throw new FluxLimitException("\u5E76\u53D1\u6570\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("App Stopped") > -1)
+                throw new AuthenticationFailureException("\u5E94\u7528\u5DF2\u88AB\u53D6\u6D88\u8D44\u683C");
+            else
+                throw e;
+        }
+        ArrayList taskList = (ArrayList)t2m.message2Task(messageList);
+        if(taskList.size() > 0)
+            return (SubTask)taskList.get(0);
+        else
+            return null;
+    }
+
+    public List getReturnedTasksInfo(SubTask subTask, String ip, String port)
+        throws AuthenticationFailureException, FluxLimitException, Exception
+    {
+        try
+        {
+            String senderID = subTask.getSenderID();
+            if(!AppAuthenticator.check(senderID))
+                throw new AuthenticationFailureException("\u5E94\u7528\u65B9ID\u4E3A" + senderID + "\u7684\u5E94\u7528\u65B9\u5728\u67E5\u8BE2\u4EFB\u52A1\u65F6\u8EAB\u4EFD\u8BA4\u8BC1\u672A\u901A\u8FC7\uFF01");
+        }
+        catch(Exception e)
+        {
+            throw e;
+        }
+        ArrayList subMessageList = new ArrayList();
+        Task2Message t2m = new Task2Message();
+        subTask.setTaskID("");
+        subTask.setCommand("1003");
+        subTask.setTaskBody(" ".getBytes());
+        subMessageList = (ArrayList)t2m.task2Message(subTask);
+        HttpPIEEOperator httpPIEEOperator = new HttpPIEEOperator();
+        ArrayList messageList = null;
+        try
+        {
+            if(port.trim().equals(""))
+                httpPIEEOperator.connect("http://" + ip + "/piee/listen.dragon");
+            else
+                httpPIEEOperator.connect("http://" + ip + ":" + port + "/piee/listen.dragon");
+            messageList = (ArrayList)httpPIEEOperator.read(subMessageList);
+            httpPIEEOperator.disconnect();
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage() != null && e.getMessage().indexOf("Flux Limit") > -1)
+                throw new FluxLimitException("\u540C\u65F6\u5728\u7EBF\u7684\u5E94\u7528\u65B9\u6570\u91CF\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("Stress Limit") > -1)
+                throw new FluxLimitException("\u5E76\u53D1\u6570\u9650\u5236");
+            if(e.getMessage() != null && e.getMessage().indexOf("App Stopped") > -1)
+                throw new AuthenticationFailureException("\u5E94\u7528\u5DF2\u88AB\u53D6\u6D88\u8D44\u683C");
+            else
+                throw e;
+        }
+        ArrayList taskList = (ArrayList)t2m.message2Task(messageList);
+        return taskList;
+    }
+
+    private boolean checkTaskSenderID(List subTaskList, String senderID)
+    {
+        boolean flag = true;
+        int i = 0;
+        do
+        {
+            if(i >= subTaskList.size())
+                break;
+            if(!((SubTask)subTaskList.get(i)).getSenderID().equalsIgnoreCase(senderID))
+            {
+                flag = false;
+                break;
+            }
+            i++;
+        } while(true);
+        return flag;
+    }
+
+    private boolean checkTaskMessageSenderID(List subTaskList, String senderID)
+        throws Exception
+    {
+        boolean flag = true;
+        SubTask subTask = null;
+        byte message[] = null;
+        int i = 0;
+        do
+        {
+            if(i >= subTaskList.size())
+                break;
+            subTask = (SubTask)subTaskList.get(i);
+            message = subTask.getTaskBody();
+            java.io.InputStream in = new ByteArrayInputStream(message);
+            SAXReader reader = new SAXReader();
+            reader.setEncoding("GBK");
+            Document doc = reader.read(in);
+            Element element = null;
+            List list = doc.selectNodes("/RBSPMessage/SenderID");
+            Iterator it = list.listIterator();
+            do
+            {
+                if(!it.hasNext())
+                    break;
+                element = (Element)it.next();
+                if(element.getText().trim().equalsIgnoreCase(senderID.trim()))
+                    continue;
+                flag = false;
+                break;
+            } while(true);
+            if(!flag)
+                break;
+            i++;
+        } while(true);
+        return flag;
+    }
+
+    public static final int taskBodyLimit = 0x200000;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-lazy-init="true">
+
+	<description>Spring公共配置 </description>
+ 
+ 
+
+	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.iflytek.jsec" />
+
+	<bean id="jsecDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>${cac.datasource.jndi.name}</value>
+		</property>
+	</bean>
+  
+ 	<bean id="jsecJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" autowire-candidate="false">        
+ 		<property name="dataSource" ref="jsecDataSource"/>    
+ 	</bean>
+  
+ 	<bean id="jsecService" class="com.iflytek.jsec.cac.service.security.JsecServiceDBImpl">
+ 		<property name="jdbcTemplate" ref="jsecJdbcTemplate"/>    
+ 	</bean>
+
+ 
+ 
+ 	<bean id="cacConstant" class="com.iflytek.jsec.cac.constant.CacConstant">
+ 		<property name="rootMenuName" value="${jsec.root.menu.name}"/>    
+ 		<property name="defaultMenuName" value="${jsec.default.menu.name}"/>    
+ 		<property name="defaultUserRole" value="${jsec.default.user.role}"/>    
+ 		<property name="defaultFramesetSubSystemId" value="${jsec.default.FramesetSubSystemId}"/>    
+ 		<property name="rootRegionGuid" value="${jsec.root.region.guid}"/>    
+ 		<property name="rootOrganizationGuid" value="${jsec.root.organization.guid}"/>    
+ 		<property name="applicationTitle" value="${Application.Title}"/>    
+ 		<property name="ssdq" value="${deploy.ssdq}"/>    
+ 	</bean> 
+ 
+ 
+</beans>

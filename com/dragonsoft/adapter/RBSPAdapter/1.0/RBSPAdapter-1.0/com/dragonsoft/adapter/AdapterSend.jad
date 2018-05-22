@@ -1,0 +1,191 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-20 10:37:17
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   AdapterSend.java
+
+package com.dragonsoft.adapter;
+
+import com.dragonsoft.commons.util.DateUtils;
+import com.dragonsoft.commons.util.StringUtils;
+import com.dragonsoft.rbsp.piee.api.HttpPIEEOperator;
+import com.dragonsoft.rbsp.piee.base.spackage.SubMessage;
+import com.dragonsoft.rbsp.piee.task.IDGenerator;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.*;
+import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
+// Referenced classes of package com.dragonsoft.adapter:
+//            Profile
+
+public class AdapterSend
+{
+
+    public AdapterSend()
+    {
+    }
+
+    public String sendQuery(String strItem, String strContion)
+        throws Exception
+    {
+        String strSendQueryInfo = "";
+        try
+        {
+            Profile proFile = new Profile("/rbsp_setup.ini");
+            String strIp = proFile.getValue(PROFILE_BASE, PROFILE_IP);
+            String strPort = proFile.getValue(PROFILE_BASE, PROFILE_PORT);
+            String strSenderId = proFile.getValue(PROFILE_BASE, PROFILE_SENDERID);
+            String strUrl = "http://" + strIp + "/piee/listen.dragon";
+            if(strPort != null && strPort.length() > 0)
+                strUrl = "http://" + strIp + ":" + strPort + "/piee/listen.dragon";
+            String strReceiveId = proFile.getValue(strItem, PROFILE_RECEIVERID);
+            String strDataCode = proFile.getValue(strItem, PROFILE_DATAOBJECTCODE);
+            String strReturns = proFile.getValue(strItem, PROFILE_RETURNS);
+            byte btXml[] = createXml(strSenderId, strReceiveId, strDataCode, strContion, strReturns);
+            SubMessage subMsg = buildMessage(strSenderId, strReceiveId, btXml);
+            String strSrcTaskId = subMsg.getSrcTaskId();
+            List sendList = sendMessage((SubMessage)subMsg.clone(), strUrl);
+            SubMessage subReceMsg = buildReviceMessage(strSenderId, strSrcTaskId);
+            Date dtStart = new Date();
+            do
+            {
+                Date dtCurrent = new Date();
+                long timespan = dtCurrent.getTime() - dtStart.getTime();
+                if(timespan > (long)(Max_Timeout * 1000))
+                    break;
+                List list = readMessage((SubMessage)subReceMsg.clone(), strUrl);
+                if(list != null && list.size() > 0)
+                {
+                    SubMessage subReviceMsg = (SubMessage)list.get(0);
+                    if(subReviceMsg != null)
+                    {
+                        strSendQueryInfo = new String(subReviceMsg.getByteMessageBody());
+                        break;
+                    }
+                }
+                Thread.sleep(800L);
+            } while(true);
+        }
+        catch(IOException ioe)
+        {
+            throw new Exception("\u53D1\u9001\u6D88\u606F\u51FA\u9519!" + ioe.toString());
+        }
+        return strSendQueryInfo;
+    }
+
+    private List sendMessage(SubMessage subMsg, String strUrl)
+        throws Exception
+    {
+        ArrayList list = new ArrayList();
+        list.add(subMsg);
+        HttpPIEEOperator httpOperator = new HttpPIEEOperator();
+        httpOperator.connect(strUrl);
+        List returnList = httpOperator.write(list);
+        httpOperator.disconnect();
+        return returnList;
+    }
+
+    private List readMessage(SubMessage subMsg, String strUrl)
+        throws Exception
+    {
+        ArrayList list = new ArrayList();
+        list.add(subMsg);
+        HttpPIEEOperator httpOperator = new HttpPIEEOperator();
+        httpOperator.connect(strUrl);
+        List returnList = httpOperator.read(list);
+        httpOperator.disconnect();
+        return returnList;
+    }
+
+    private SubMessage buildReviceMessage(String strSendId, String strSrcTaskId)
+    {
+        SubMessage subMesg = new SubMessage();
+        subMesg.setCommand("1002");
+        subMesg.setMessageType("0102");
+        subMesg.setMessageBody("0".getBytes());
+        subMesg.setSendID(strSendId);
+        subMesg.setSrcTaskId(strSrcTaskId);
+        return subMesg;
+    }
+
+    private SubMessage buildMessage(String strSendId, String strReceiveId, byte btBody[])
+    {
+        IDGenerator idGenerator = IDGenerator.getInstance(strSendId);
+        String strTaskId = idGenerator.getNextId();
+        SubMessage subMesg = new SubMessage();
+        subMesg.setCommand("1001");
+        subMesg.setMessageBody(btBody);
+        subMesg.setPriority("3");
+        subMesg.setReceiverID(strReceiveId);
+        subMesg.setRequestId("");
+        subMesg.setSendID(strSendId);
+        subMesg.setMessageId(idGenerator.getNextId());
+        subMesg.setMessagePackNum("1");
+        subMesg.setMessageSeq("1");
+        subMesg.setTaskMessNum("1");
+        subMesg.setMessageType("0101");
+        subMesg.setSrcTaskId(strTaskId);
+        subMesg.setInvalidation(DateUtils.add(DateUtils.getCurrTimeStr(1), 1, 1, 1));
+        subMesg.setIsACKRequired("");
+        subMesg.setSrcMessageID("");
+        subMesg.setSendTime(DateUtils.getCurrTimeStr(1));
+        subMesg.setTaskId(strTaskId);
+        subMesg.setTaskInfo("sendQuery");
+        return subMesg;
+    }
+
+    private byte[] createXml(String strSendId, String strReceiveId, String strCode, String strContion, String strFields)
+    {
+        Document document = DocumentHelper.createDocument();
+        Element root = document.addElement("RBSPMessage");
+        root.addElement("SenderID").addText(strSendId);
+        root.addElement("ServiceID").addText(strReceiveId);
+        Element node2 = root.addElement("Method");
+        node2.addElement("Name").addText("Query");
+        Element node22 = node2.addElement("Security");
+        node22.addElement("Signature");
+        Element node222 = node22.addElement("Encrypt");
+        node222.addAttribute("Algorithm", "DES");
+        Element node23 = node2.addElement("Items");
+        Element node23x = node23.addElement("Item");
+        node23x.addElement("Name").addText("DataObjectCode");
+        Element node23xx = node23x.addElement("Value").addAttribute("Type", "string");
+        node23xx.addElement("Data").addText(strCode);
+        Element node23xb = node23.addElement("Item");
+        node23xb.addElement("Name").addText("Condition");
+        Element node23xxb = node23xb.addElement("Value").addAttribute("Type", "string");
+        node23xxb.addElement("Data").addText(strContion);
+        Element node23xc = node23.addElement("Item");
+        node23xc.addElement("Name").addText("RequiredItems");
+        Element node23xxc = node23xc.addElement("Value").addAttribute("Type", "arrayOf_string");
+        Element node23xxx = node23xxc.addElement("Row");
+        String strField[] = StringUtils.splitString(strFields, ",");
+        for(int j = 0; j < strField.length; j++)
+            node23xxx.addElement("Data").addText(strField[j]);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try
+        {
+            OutputFormat format = OutputFormat.createPrettyPrint();
+            format.setEncoding("GBK");
+            XMLWriter writer = new XMLWriter(baos, format);
+            writer.write(document);
+            writer.close();
+        }
+        catch(Exception exception) { }
+        byte bt[] = baos.toByteArray();
+        return bt;
+    }
+
+    private static String PROFILE_BASE = "base";
+    private static String PROFILE_IP = "ip";
+    private static String PROFILE_PORT = "port";
+    private static String PROFILE_SENDERID = "senderid";
+    private static String PROFILE_RECEIVERID = "ReceiverID";
+    private static String PROFILE_DATAOBJECTCODE = "DataObjectCode";
+    private static String PROFILE_RETURNS = "returnFields";
+    private static int Max_Timeout = 120;
+
+}

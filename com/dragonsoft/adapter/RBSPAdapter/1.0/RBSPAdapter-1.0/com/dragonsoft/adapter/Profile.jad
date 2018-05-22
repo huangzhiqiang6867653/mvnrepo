@@ -1,0 +1,134 @@
+// Decompiled by DJ v3.7.7.81 Copyright 2004 Atanas Neshkov  Date: 2010-4-19 23:21:38
+// Home Page : http://members.fortunecity.com/neshkov/dj.html  - Check often for new version!
+// Decompiler options: packimports(3) 
+// Source File Name:   Profile.java
+
+package com.dragonsoft.adapter;
+
+import java.io.*;
+import java.util.*;
+
+public class Profile extends LinkedHashMap
+{
+    private class Entry
+    {
+
+        public String name;
+        public String value;
+
+        public Entry(String name, String value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+
+    Profile(String filename)
+        throws FileNotFoundException, IOException
+    {
+        this.filename = null;
+        load(filename);
+    }
+
+    Profile()
+    {
+        filename = null;
+    }
+
+    public void load(String filename)
+        throws FileNotFoundException, IOException
+    {
+        this.filename = filename;
+        java.io.InputStream inputstream = getClass().getResourceAsStream(filename);
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputstream));
+        String line = null;
+        Map group = null;
+        do
+        {
+            line = br.readLine();
+            if(line == null)
+                break;
+            String groupName = getGroup(line);
+            if(groupName != null)
+            {
+                group = new LinkedHashMap();
+                put(groupName, group);
+            } else
+            {
+                Entry entry = getEntry(line);
+                if(group != null && entry != null)
+                    group.put(entry.name, entry.value);
+            }
+        } while(true);
+    }
+
+    public void saveAs(String filename)
+        throws IOException
+    {
+        this.filename = filename;
+        saveProfile();
+    }
+
+    public void saveProfile()
+        throws IOException
+    {
+        if(filename == null)
+            return;
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+        for(Iterator i = entrySet().iterator(); i.hasNext(); writer.write("\r\n"))
+        {
+            java.util.Map.Entry group = (java.util.Map.Entry)i.next();
+            writer.write("[" + group.getKey() + "]\r\n");
+            Map map = (Map)group.getValue();
+            java.util.Map.Entry entry;
+            for(Iterator j = map.entrySet().iterator(); j.hasNext(); writer.write(entry.getKey() + "=" + entry.getValue() + "\r\n"))
+                entry = (java.util.Map.Entry)j.next();
+
+        }
+
+        writer.close();
+    }
+
+    private String getGroup(String line)
+    {
+        int start = line.indexOf('[');
+        int end = line.indexOf(']');
+        return (start < 0) | (end <= start) ? null : line.substring(start + 1, end).trim();
+    }
+
+    public String getValue(String strGroup, String strItem)
+    {
+        Map map = (Map)get(strGroup);
+        String strTempValue = (String)map.get(strItem);
+        return strTempValue;
+    }
+
+    private Entry getEntry(String line)
+    {
+        int index = line.indexOf('=');
+        return index >= 0 ? new Entry(line.substring(0, index).trim(), line.substring(index + 1)) : null;
+    }
+
+    public String getFilename()
+    {
+        return filename;
+    }
+
+    public void setFilename(String filename)
+    {
+        this.filename = filename;
+    }
+
+    public static void main(String args[])
+    {
+        try
+        {
+            Profile profile = new Profile("rbsp_setup.ini");
+            System.out.println(profile.getValue("base", "ip"));
+        }
+        catch(Exception exception) { }
+    }
+
+    private String filename;
+}
